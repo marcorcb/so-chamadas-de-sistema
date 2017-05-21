@@ -1,1 +1,0 @@
-# so-chamadas-de-sistema
