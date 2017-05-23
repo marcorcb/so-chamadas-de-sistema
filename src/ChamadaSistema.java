@@ -1,3 +1,8 @@
+/**
+ * Sistemas Operacionais - PUC Minas 2017
+ * Federico Janses, Marco Braga, Taina Viriato
+ */
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -155,7 +160,6 @@ public class ChamadaSistema {
     /*
      * Cria arquivos temporarios dentro do diretorio atual
      * os arquivos sao apagados com a finalizacao do programa
-     *
      */
     private static void criarArquivoTemp(String diretorio, String nomeArquivo, String extensaoArquivo) {
 
