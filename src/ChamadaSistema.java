@@ -6,10 +6,13 @@ import java.util.Scanner;
 
 public class ChamadaSistema {
 
-    public static void main (String [] args) {
+    public static void main(String[] args) {
         Scanner arq = new Scanner(System.in);
         int option;
+        String diretorio;
+        String arquivo;
         String diretorioAtual = System.getProperty("user.dir");
+
         do {
             System.out.println("Você está no diretório: " + diretorioAtual + "\n");
             System.out.println("Entre com o número desejado:");
@@ -26,9 +29,6 @@ public class ChamadaSistema {
                 System.out.println("Valor inválido. Digite novamente");
                 option = arq.nextInt();
             }
-
-            String diretorio;
-            String arquivo;
 
             switch (option) {
                 case 0:
@@ -55,7 +55,7 @@ public class ChamadaSistema {
                     apagarArquivo(diretorioAtual + "/" + arquivo);
                     break;
                 case 4:
-                    System.out.println("Digite o nome (com a extensão) do arquivo que deseja apagar");
+                    System.out.println("Digite o nome (com a extensão) do arquivo que deseja ler");
                     arquivo = arq.next();
                     lerArquivo(diretorioAtual + "/" + arquivo);
                     break;
@@ -71,45 +71,67 @@ public class ChamadaSistema {
         } while (option != 0);
     }
 
+    /*
+     * Verfica se e um diretorio pra que deseja mudar e
+     * um diretorio valido
+     */
     private static boolean checarDiretorio(String diretorio) {
+        // Inicializa um arquivo
         File file = new File(diretorio);
         return file.isDirectory();
     }
 
+    /*
+     * Lista todos os arquivos contidos no diretorio atual
+     */
     private static void listarDiretorio(String diretorio) {
-
+        // Inicializa um arquivo
         File curDir = new File(diretorio);
 
+        // Monta uma lista com todos os arquivos
         File[] filesList = curDir.listFiles();
-        for(File f : filesList){
+        // Imprime a lista de arquivos
+        for (File f : filesList) {
             System.out.println(f.getName());
         }
     }
 
+    /*
+     * Apaga o arquivo desejado do diretorio atual
+     * Verifica se o arquivo e realmente um arquivo e o deleta
+     */
     private static void apagarArquivo(String arquivo) {
-
+        // Inicializa um arquivo
         File file = new File(arquivo);
 
+        // Se o arquivo for valido, delete
         if (file.isFile()) {
-           if (file.delete()) {
-               System.out.println("Arquivo apagado com sucesso");
-           } else {
-               System.out.println("Erro: não foi possível apagar");
-           }
+            if (file.delete()) {
+                System.out.println("Arquivo apagado com sucesso");
+            } else {
+                System.out.println("Erro: não foi possível apagar");
+            }
         } else {
             System.out.println("Erro: nome de arquivo inválido");
         }
     }
 
+    /*
+     * Faz a leitura do arquivo inserido pelo usuario
+     * Se o arquivo for valido le o arquivo utilizando Buffer
+     */
     private static void lerArquivo(String arquivo) {
+        // Inicializa um arquivo
         File file = new File(arquivo);
 
+        // Verifica se o arquivo e valido e inicializa o buffer
         if (file.isFile()) {
             BufferedReader reader = null;
 
             try {
                 reader = new BufferedReader(new FileReader(file));
 
+                // Percorre o arquivo e imprime as linhas
                 String line;
                 while ((line = reader.readLine()) != null) {
                     System.out.println(line);
@@ -130,13 +152,21 @@ public class ChamadaSistema {
         }
     }
 
+    /*
+     * Cria arquivos temporarios dentro do diretorio atual
+     * os arquivos sao apagados com a finalizacao do programa
+     *
+     */
     private static void criarArquivoTemp(String diretorio, String nomeArquivo, String extensaoArquivo) {
 
+        // Inicializa um arquivo
         File file;
 
         try {
+            // Cria o arquivo temporario com nome e extensao
             file = File.createTempFile(nomeArquivo, extensaoArquivo, new File(diretorio));
             System.out.println("Arquivo criado com sucesso");
+            // Deleta o arquivo ao final da execucao do programa
             file.deleteOnExit();
         } catch (IOException e) {
             e.printStackTrace();
