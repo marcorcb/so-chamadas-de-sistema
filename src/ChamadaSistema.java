@@ -24,9 +24,9 @@ public class ChamadaSistema {
             System.out.println("0 - Sair");
             System.out.println("1 - Mudar diretório");
             System.out.println("2 - Listar conteúdo do diretório");
-            System.out.println("3 - Apagar arquivos");
+            System.out.println("3 - Apagar arquivo do diretório");
             System.out.println("4 - Ler e mostrar conteúdos de texto");
-            System.out.println("5 - Criar arquivos texto temporários");
+            System.out.println("5 - Criar arquivo texto temporário");
 
             option = arq.nextInt();
 
@@ -165,6 +165,11 @@ public class ChamadaSistema {
 
         // Inicializa um arquivo
         File file;
+
+        if (extensaoArquivo.length() < 3) {
+            System.out.println("Erro: extensão inválida");
+            return;
+        }
 
         try {
             // Cria o arquivo temporario com nome e extensao
